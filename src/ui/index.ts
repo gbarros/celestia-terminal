@@ -4,6 +4,11 @@ import { Block, Blob, Rollup } from '../types';
 import * as fs from 'fs';
 import * as path from 'path';
 
+/**
+ * TerminalUI is a supporting component that handles the display of data in the terminal.
+ * It provides a grid-based layout for showing blocks, blobs, statistics, and errors.
+ * This is an implementation detail of the UI layer.
+ */
 export class TerminalUI {
   private screen: blessed.Widgets.Screen;
   private grid: any;
@@ -12,6 +17,7 @@ export class TerminalUI {
   private statsBox: any;
   private rollupList: any;
   private errorLog: any;
+  private watermarkBox: any;
   private errorLogFile: string;
   private rollups: Rollup[];
   private totalBlocks: number;
@@ -89,7 +95,18 @@ export class TerminalUI {
       border: { type: 'line', fg: 'red' },
       tags: true
     });
-
+    
+    // Watermark text (bottom)
+    this.watermarkBox = blessed.text({
+      parent: this.screen,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: 1,
+      content: '{center}{gray-fg}Powered by {blue-fg}Celenium API{/} - {blue-fg}https://celenium.io{/}{/}',
+      tags: true,
+      align: 'center'
+    });
     // Handle exit
     this.screen.key(['escape', 'q', 'C-c'], () => {
       process.exit(0);

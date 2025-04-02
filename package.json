@@ -2,18 +2,20 @@
   "name": "blobr",
   "version": "1.0.0",
   "description": "A terminal-based rollup activity monitor for Celestia",
-  "main": "dist/index.js",
+  "main": "dist/cli.js",
   "bin": {
-    "blobr": "./dist/index.js"
+    "blobr": "./dist/cli.js"
   },
   "scripts": {
     "build:tsc": "tsc",
     "build": "npm run clean && npm run build:tsc",
-    "start": "node dist/index.js",
-    "dev": "ts-node src/index.ts",
+    "start": "node dist/cli.js",
+    "dev": "ts-node src/cli.ts",
     "watch": "tsc -w",
     "clean": "rimraf dist",
-    "clean:all": "rimraf dist node_modules package-lock.json"
+    "clean:all": "rimraf dist node_modules package-lock.json",
+    "prepublishOnly": "npm run build",
+    "publish": "npm publish --access public"
   },
   "keywords": [
     "celestia",
@@ -24,6 +26,10 @@
   ],
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gbarros/celestia-terminal.git"
+  },
   "dependencies": {
     "axios": "^1.6.7",
     "blessed": "^0.1.81",
