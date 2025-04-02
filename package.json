@@ -1,11 +1,16 @@
 {
   "name": "blobr",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "A terminal-based rollup activity monitor for Celestia",
   "main": "dist/cli.js",
   "bin": {
-    "blobr": "./dist/cli.js"
+    "blobr": "dist/cli.js"
   },
+  "files": [
+    "dist",
+    "assets",
+    "README.md"
+  ],
   "scripts": {
     "build:tsc": "tsc",
     "build": "npm run clean && npm run build:tsc",

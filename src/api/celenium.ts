@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { Block, Blob, Namespace, NetworkConfig, Rollup, BlockStats } from '../types';
+import { Block, Blob, NetworkConfig, Rollup, BlockStats } from '../types/index';
 
 const NETWORKS: Record<string, NetworkConfig> = {
   mainnet: {

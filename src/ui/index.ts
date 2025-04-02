@@ -1,6 +1,6 @@
 import * as blessed from 'blessed';
 import * as contrib from 'blessed-contrib';
-import { Block, Blob, Rollup } from '../types';
+import { Block, Blob, Rollup } from '../types/index';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -134,12 +134,13 @@ export class TerminalUI {
 
   updateBlob(blob: Blob): void {
     const namespaceName = blob.namespace.name || 'Unknown Namespace';
+    const namespaceId = blob.namespace.namespace_id || 'Unknown ID';
     const rollupName = blob.rollup?.name || 'Unknown Rollup';
     const signer = blob.signer?.hash ? blob.signer.hash.slice(0, 16) + '...' : 'Unknown';
     const blobSize = this.bytesToKB(blob.size) + ' KB';
     
     // Log each line separately to ensure proper display
-    this.blobList.log(`{bold}Blob{/} - {yellow-fg}NS: ${namespaceName}{/}`);
+    this.blobList.log(`{bold}Blob{/} - {yellow-fg}NS: ${namespaceName}{/} ({gray-fg}${namespaceId}{/})`);
     this.blobList.log(`  {cyan-fg}Rollup: ${rollupName}{/} | {green-fg}Size: ${blobSize}{/} | {magenta-fg}Type: ${blob.content_type || 'unknown'}{/}`);
     this.blobList.log(`  {gray-fg}From: ${signer}{/}`);
   }

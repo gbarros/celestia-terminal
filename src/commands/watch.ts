@@ -1,14 +1,12 @@
 import { Command } from 'commander';
 import { CeleniumAPI } from '../api/celenium';
 import { TerminalUI } from '../ui';
-import { WatchOptions } from '../types';
+import { WatchOptions } from '../types/index';
 
 export const watchCommand = new Command('watch')
   .description('Watch real-time blob activity')
   .option('-n, --network <network>', 'Network to monitor (mainnet, mocha, arabica)', 'mainnet')
-  .option('-f, --filter <namespace>', 'Filter blobs by namespace')
-  .option('-l, --limit <number>', 'Limit number of blocks to show', '100')
-  .option('-c, --compact', 'Show compact output')
+  .option('-f, --filter <namespace>', 'Filter displayed blobs by namespace (client-side filtering)') 
   .option('-i, --interval <ms>', 'Update interval in milliseconds', '7000')
   .action(async (options: WatchOptions) => {
     const api = new CeleniumAPI(options.network);
@@ -59,7 +57,16 @@ export const watchCommand = new Command('watch')
             // Fetch and display blobs for this block
             if (blockStats.blobs_count > 0) {
               const blobs = await api.getBlockBlobs(block.height);
-              blobs.forEach(blob => {
+              // Filter blobs if namespace filter is provided
+              const filter = options.filter;
+              const filteredBlobs = filter && filter.length > 0
+                ? blobs.filter(blob => 
+                    blob.namespace?.namespace_id?.toLowerCase().includes(filter.toLowerCase())
+                  )
+                : blobs;
+              
+              // Only display filtered blobs, but keep stats accurate with all blobs
+              filteredBlobs.forEach(blob => {
                 ui.updateBlob(blob);
               });
             }

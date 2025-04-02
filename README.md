@@ -20,7 +20,7 @@ Blobr is a real-time terminal-based monitor for Celestia rollup activity. It pro
 ### For Users
 Install globally from npm:
 ```bash
-npm install -g gbarros/blobr
+npm install -g blobr
 ```
 
 Then run:
@@ -91,7 +91,7 @@ blobr watch --network mocha --filter your-namespace --interval 5000
 
 ## Screenshot
 
-![Blobr Terminal UI](assets/terminal.png)
+![Blobr Terminal UI](./assets/terminal.png)
 
 ## Contributing
 
